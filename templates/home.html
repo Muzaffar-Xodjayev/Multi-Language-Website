@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block mycontent %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                {% for i in data %}
+                <div class="card shadow p-3 mb-3">
+                    <h3>{{i.title}}</h3>
+                    <div>
+                        <p>{{i.text|truncatechars:200}}</p>
+                        <a href="{% url 'post-detail-page' i.slug %}" class="btn btn-success">Read More...</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

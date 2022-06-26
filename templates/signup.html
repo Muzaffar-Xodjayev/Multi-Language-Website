@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block mycontent %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mb-5">
+                <div class="card shadow p-3">
+                    <h2 align="center">{% trans 'Register Form' %}</h2>
+                    <hr>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if status %}
+                           <div class="alert {{col}}">{{status}}</div>
+                        {% endif %}
+                        <div class="form-group mb-2">
+                            <label class="form-label">{% trans 'Username' %}</label>
+                            <input type="text" class="form-control" required name="username" placeholder="{% trans 'Username' %}">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="form-label">{% trans 'Email' %}</label>
+                            <input type="email" class="form-control" required name="email" placeholder="{% trans 'Email' %}">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="form-label">{% trans 'Password' %}</label>
+                            <input type="password" class="form-control" required name="password" placeholder="{% trans 'Password' %}">
+                        </div>
+                        <div class="mb-3">
+                             <div class="g-recaptcha" data-sitekey="6Ldiq6AgAAAAAE3SMFPP3gNEMjxFq5Ys-L2vlRdY"></div>
+                        </div>
+                        <hr>
+                        <div>
+                            <input type="submit" class="btn btn-success mt-2" value="Sign Up">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}

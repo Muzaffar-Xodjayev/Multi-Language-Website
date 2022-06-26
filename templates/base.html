@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'Multi Language WebSite' %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home-page' %}">Multi Language</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home-page' %}">{% trans 'Home' %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about-page' %}">{% trans 'About' %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact-page' %}">{% trans 'Contact' %}</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% trans 'News' %}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">{% trans 'Music' %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">{% trans 'Sport' %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">{% trans 'Education' %}</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-success" href="{% url 'signup-page' %}">{% trans 'SignUp' %}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language" class="form-select float-end" style="width:10%;" onchange="this.form.submit()"> 
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+{% block mycontent %}
+
+{% endblock %}
+
+
+<footer class="container mt-3">
+  <p class="float-end">
+    <a href="#" class="text-decoration-none">{% trans 'Go Up' %}</a>
+  </p>
+  <p>&copy {% trans '2021-2022 All rights recerved' %}
+    <a href="#" class="text-decation-none">{% trans 'Nits Team' %}</a>
+  </p>
+</footer>
+
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+</body>
+</html>
